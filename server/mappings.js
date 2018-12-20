@@ -1,5 +1,5 @@
 import { BigQuery } from '@google-cloud/bigquery';
-import config from '../config';
+import config from '../public/config';
 
 // this is where we store the mappings:
 const mappings = {};

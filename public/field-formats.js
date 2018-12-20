@@ -1,5 +1,5 @@
 import { fieldFormats } from 'ui/registry/field_formats';
-import config from '../config';
+import config from './config';
 
 Object.keys(config.mappings).forEach(function(mappingId) {
   const cfg = config.mappings[mappingId];
