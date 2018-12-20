@@ -31,7 +31,9 @@ export async function init(server) {
 
 export async function loadMapping(mappingId) {
   const cfg = config.mappings[mappingId];
-  const bq = new BigQuery();
+  const bq = new BigQuery({
+    projectId: 'ism-data'
+  });
 
   const [rows] = await bq.query({query: queries[mappingId]});
 
