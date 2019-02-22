@@ -1,6 +1,6 @@
 {
   "name": "ism",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Kibana plugin used by Inskin Media.",
   "main": "index.js",
   "kibana": {

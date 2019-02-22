@@ -11,6 +11,10 @@ export default {
     lineitem: {
       title: 'Line Item',
       fieldType: ['number', 'string']
+    },
+    site: {
+      title: 'Site',
+      fieldType: ['number', 'string']
     }
   }
 }

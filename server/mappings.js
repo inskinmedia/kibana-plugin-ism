@@ -6,21 +6,44 @@ const mappings = {};
 
 // queries for each mapping:
 const queries = {
-  section: `
-    SELECT Section_ID AS id, Section_Name AS name
-    FROM \`ism-data.raw_isap_metadata.sections_and_publishers_raw\`
-    GROUP BY Section_ID, Section_Name
-  `,
-  campaign: `
-    SELECT Campaign_ID AS id, Campaign_Name AS name
-    FROM \`ism-data.raw_isap_metadata.campaigns_raw\`
-    GROUP BY Campaign_ID, Campaign_Name
-  `,
-  lineitem: `
-    SELECT Line_Item_ID AS id, Line_Item_Name AS name
-    FROM \`ism-data.raw_isap_metadata.line_items_raw\`
-    GROUP BY Line_Item_ID, Line_Item_Name
-  `
+  section: [
+    `
+      SELECT Section_ID AS id, Section_Name AS name
+      FROM \`ism-data.raw_isap_metadata.sections_and_publishers_raw\`
+      GROUP BY Section_ID, Section_Name
+    `
+  ],
+  campaign: [
+    `
+      SELECT Campaign_ID AS id, Campaign_Name AS name
+      FROM \`ism-data.raw_isap_metadata.campaigns_raw\`
+      GROUP BY Campaign_ID, Campaign_Name
+    `,
+    `
+      SELECT Id AS id, Name AS name
+      FROM \`ism-data.raw_adzerk.campaigns_raw\`
+      GROUP BY Id, Name
+    `
+  ],
+  lineitem: [
+    `
+      SELECT Line_Item_ID AS id, Line_Item_Name AS name
+      FROM \`ism-data.raw_isap_metadata.line_items_raw\`
+      GROUP BY Line_Item_ID, Line_Item_Name
+    `,
+    `
+      SELECT Id AS id, Name AS name
+      FROM \`ism-data.raw_adzerk.flights_raw\`
+      GROUP BY Id, Name
+    `
+  ],
+  site: [
+    `
+      SELECT Id AS id, Title AS name
+      FROM \`ism-data.raw_adzerk.sites_raw\`
+      GROUP BY Id, Title
+    `
+  ]
 };
 
 export async function init(server) {
@@ -51,8 +74,6 @@ export async function loadMapping(mappingId) {
     projectId: 'ism-data'
   });
 
-  const [rows] = await bq.query({query: queries[mappingId]});
-
   if (!mappings[mappingId]) {
     mappings[mappingId] = {};
   }
@@ -60,8 +81,14 @@ export async function loadMapping(mappingId) {
   mappings[mappingId].lastUpdated = (new Date()).getTime();
   mappings[mappingId].data = {};
 
-  for (let i = 0; i < rows.length; i++) {
-    mappings[mappingId].data[rows[i].id] = rows[i].name;
+  for (let i = 0; i < queries[mappingId].length; i++) {
+    const [rows] = await bq.query({query: queries[mappingId][i]});
+
+    for (let j = 0; j < rows.length; j++) {
+      if (rows[j].id) {
+        mappings[mappingId].data[rows[j].id] = rows[j].name;
+      }
+    }
   }
 
   console.log(JSON.stringify(mappings[mappingId], null, 2));

@@ -31,7 +31,7 @@ Object.keys(config.mappings).forEach(function(mappingId) {
             return `<span title="ID: ${value}">${mappings[value]}</span>`;
           }
           else {
-            return value;
+            return `<span>${value}</span>`;
           }
         }
       }
