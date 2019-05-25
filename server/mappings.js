@@ -51,11 +51,11 @@ export async function init(server) {
   server.route({
     path: '/api/ism/mappings/{mappingId}',
     method: 'GET',
-    handler(req, reply) {
+    async handler(req, h) {
       const mapping = mappings[req.params.mappingId];
       const result = mapping ? mapping.data || {} : {};
 
-      reply(result);
+      return result;
     }
   });
 
