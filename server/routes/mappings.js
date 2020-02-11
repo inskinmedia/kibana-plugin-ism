@@ -1,5 +1,5 @@
 import { BigQuery } from '@google-cloud/bigquery';
-import config from '../public/config';
+import config from '../../public/config';
 
 // this is where we store the mappings:
 const mappings = {};
@@ -46,12 +46,12 @@ const queries = {
   ]
 };
 
-export async function init(server) {
+export default function(server) {
   // add an API route to get mappings:
   server.route({
     path: '/api/ism/mappings/{mappingId}',
     method: 'GET',
-    async handler(req, h) {
+    handler(req, h) {
       const mapping = mappings[req.params.mappingId];
       const result = mapping ? mapping.data || {} : {};
 
@@ -68,7 +68,7 @@ export async function init(server) {
   }, 86400 * 1000);
 }
 
-export async function loadMapping(mappingId) {
+async function loadMapping(mappingId) {
   const cfg = config.mappings[mappingId];
   const bq = new BigQuery({
     projectId: 'ism-data'

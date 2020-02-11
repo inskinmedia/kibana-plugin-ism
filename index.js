@@ -1,6 +1,6 @@
-import { init as initMappings } from './server/mappings';
+import mappingsRoute from './server/routes/mappings';
 
-export default function (kibana) {
+export default function(kibana) {
   return new kibana.Plugin({
     require: ['elasticsearch'],
     name: 'ism',
@@ -17,7 +17,7 @@ export default function (kibana) {
     },
 
     init(server) {
-      initMappings(server);
+      mappingsRoute(server);
     }
   });
 }
