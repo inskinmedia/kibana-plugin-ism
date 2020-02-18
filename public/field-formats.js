@@ -16,23 +16,21 @@ Object.keys(config.mappings).forEach(function(mappingId) {
       static title = cfg.title;
       static fieldType = cfg.fieldType;
 
-      _convert = {
-        text(value) {
-          if (mappings[value]) {
-            return `${mappings[value]} (ID: ${value})`;
-          }
-          else {
-            return value;
-          }
-        },
+      convert(value, type) {
+        if (mappings[value]) {
+          switch (type) {
+            case 'html':
+              return `<span title="ID: ${value}">${mappings[value]}</span>`;
 
-        html(value) {
-          if (mappings[value]) {
-            return `<span title="ID: ${value}">${mappings[value]}</span>`;
+            case 'text':
+              return `${mappings[value]} (ID: ${value})`;
+
+            default:
+              return value;
           }
-          else {
-            return `<span>${value}</span>`;
-          }
+        }
+        else {
+          return value;
         }
       }
     }
