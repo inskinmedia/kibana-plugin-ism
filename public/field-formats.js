@@ -26,7 +26,7 @@ Object.keys(config.mappings).forEach(function(mappingId) {
               return `${mappings[value]} (ID: ${value})`;
 
             default:
-              return value;
+              return mappings[value];
           }
         }
         else {
