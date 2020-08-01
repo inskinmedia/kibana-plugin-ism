@@ -4,7 +4,7 @@
   "description": "Kibana plugin used by Inskin Media.",
   "main": "index.js",
   "kibana": {
-    "version": "7.5.2",
+    "version": "7.8.1",
     "templateVersion": "1.0.0"
   },
   "scripts": {
