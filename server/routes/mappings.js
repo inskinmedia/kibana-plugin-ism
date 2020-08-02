@@ -91,5 +91,5 @@ async function loadMapping(mappingId) {
     }
   }
 
-  console.log(JSON.stringify(mappings[mappingId], null, 2));
+  //console.log(JSON.stringify(mappings[mappingId], null, 2));
 }

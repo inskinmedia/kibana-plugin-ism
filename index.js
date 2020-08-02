@@ -1,12 +1,13 @@
 import mappingsRoute from './server/routes/mappings';
+import { resolve } from 'path';
 
 export default function(kibana) {
   return new kibana.Plugin({
-    require: ['elasticsearch'],
+    require: ['kibana', 'elasticsearch'],
     name: 'ism',
     uiExports: {
-      fieldFormats: [
-        'plugins/ism/field-formats'
+      hacks: [
+        resolve(__dirname, 'public/field-formats')
       ]
     },
 
